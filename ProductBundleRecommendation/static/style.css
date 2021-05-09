@@ -1,0 +1,185 @@
+
+#nav {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    display: block;
+    transition: top 0.3s;
+    z-index: 5;
+  }
+  
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #f8f9fa;
+}
+
+.username{
+    color:#76d476;
+    font-size: 14px;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;  
+}
+.nobull {
+    list-style-type: none;
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+.m-0{
+    list-style-type: none;
+}
+.box-shadow {
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #fcfcfc;
+    -webkit-box-shadow: -21px 47px 41px -25px rgba(33,14,33,0.41);
+    -moz-box-shadow: -21px 47px 41px -25px rgba(33,14,33,0.41);
+    box-shadow: -21px 47px 41px -25px rgba(33,14,33,0.41);
+    border-radius:15px;
+}
+
+.cart {
+    position: sticky;
+    top: 83%;
+    right: 20px;
+    z-index: 1;
+    border-radius: 121px 121px 121px 121px;
+    -moz-border-radius: 121px 121px 121px 121px;
+    -webkit-border-radius: 121px 121px 121px 121px;
+    border: 0px none #000000;
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(11,9,121,0.8670021657193645) 42%, rgba(0,212,255,1) 100%);
+    opacity:0.9;
+    transition: 0.5s;
+} 
+
+.cart:hover {
+    opacity:1;
+    transform: scale(1.2, 1.2);
+}
+
+.cart-count {
+    position: absolute;
+    top: -6px;
+    right: -7px;
+    height: 28px;
+    width: 28px;
+    font-size: 1.1333em;
+    padding-top:1px;
+    color: white;
+    background:red;
+    font-weight: 700;
+    border-radius: 80%;
+    transition: -webkit-transform .2s .5s;
+    transition: transform .2s .5s;
+    transition: transform .2s .5s,-webkit-transform .2s .5s;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.jumbo-image {
+    z-index: -1;
+    background-image: url("https://thumbs.dreamstime.com/b/healthy-food-background-studio-photo-different-fruits-vegetables-old-wooden-table-high-resolution-product-68278471.jpg");
+    border-radius:0px;
+    background-size: contain;
+}
+.cart-popup {
+    display:none;
+    position: fixed;
+    bottom:7.5%;
+    right: 150px;
+    background-color:#f8f9fa;
+    z-index : 7;
+    width:400px;
+    height:500px;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.cart-popup-block-display {
+    display:block;
+}
+
+.cart-popup .cart-popup-header{
+    background-color: #343a40;
+    color: white;
+    border-radius:10px 10px 0px 0px;
+}
+
+
+.fa-angle-down:hover{
+    transform: scale(1.2, 1.2)
+}
+
+
+.cart-footer {
+    position: fixed;
+    width: 400px;
+    bottom:7.5%;
+    
+}
+
+.checkout-btn {
+    border-radius: 0px 0px 10px 10px;
+}
+
+
+
+.cart-body {
+    float:left;
+    width:400px;
+    overflow-y: auto;
+    height: 399px;
+ }
+
+ .fa-times-circle:hover{
+    transform: scale(1.3, 1.3)
+}
+
+.asteriskField {
+    display:none;
+}
+
+@media only screen and (max-width: 550px) {
+    body{
+        font-size:12px;
+    }
+
+    h4 {
+        font-size: 18px;
+    }
+    .display-4 {
+        font-size:40px;
+    }
+    
+  .cart-popup {
+      left: 30px;
+      right:20px;
+      width: 300px;
+      position:fixed;
+      font-size: 12px;
+  }
+
+  .cart-body {
+    float:left;
+    width:300px;
+    overflow-y: auto;
+    height: 399px;
+ }
+
+    
+.cart-footer {
+    position: fixed;
+    width: 300px;
+    bottom:7.5%;
+    font-size:12px;
+}
+
+.jumbo-image {
+    background-size: inherit;
+}
+}
+/* img link: https://thumbs.dreamstime.com/b/healthy-food-background-studio-photo-different-fruits-vegetables-old-wooden-table-high-resolution-product-68278471.jpg */

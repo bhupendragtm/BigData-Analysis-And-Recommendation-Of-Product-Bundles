@@ -1,0 +1,17 @@
+{% load crispy_forms_tags %}
+<div class="modal-header  bg-dark text-white">
+    <h5 class="modal-title ml-auto">Login</h5>
+    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form method="POST" action="{% url 'login' %}" id="formlogin">
+{% csrf_token %}
+<div class="modal-body">
+    {{ form|crispy }}
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-success">Sign In</button>
+</div>
+</form>

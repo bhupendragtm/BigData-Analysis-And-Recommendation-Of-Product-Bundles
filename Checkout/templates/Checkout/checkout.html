@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <!--bootstrap4 cdn-->
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<title>Checkout page</title>
+ <!-- add icon link -->
+ <link rel = "icon" href = "https://th.bing.com/th/id/OIP.n3dyAjfUyuJDDrPHsOKbAQAAAA?pid=Api&w=180&h=180&c=7&dpr=1.12" type = "image/x-icon"> 
+
+<style>
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.username{
+    color:#76d476;
+    font-size: 14px;
+}
+
+.pricecount{
+    color:#76d476;
+}
+
+.row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  margin: 0 -16px;
+}
+
+.col-25 {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+}
+
+.col-50 {
+  -ms-flex: 50%; /* IE10 */
+  flex: 50%;
+}
+
+.col-75 {
+  -ms-flex: 75%; /* IE10 */
+  flex: 75%;
+}
+
+.col-25,
+.col-50,
+.col-75 {
+  padding: 0 16px;
+}
+
+.container {
+  background-color: #f2f2f2;
+  padding: 5px 20px 15px 20px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+}
+
+input[type=text] {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.icon-container {
+  margin-bottom: 20px;
+  padding: 7px 0;
+  font-size: 24px;
+}
+
+.btn {
+  background-color: #4997d0;
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.btn:hover {
+  background-color: #1183ca;
+  color:white;
+}
+
+a {
+  color: #2196F3;
+}
+
+hr {
+  border: 1px solid lightgrey;
+}
+
+span.price {
+  float: right;
+  color: grey;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+@media (max-width: 800px) {
+  .row {
+    flex-direction: column-reverse;
+  }
+  .col-25 {
+    margin-bottom: 20px;
+  }
+}
+</style>
+
+</head>
+<body>
+    <div id="nav">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="{% url 'homepage' %}"><img src="https://d2guulkeunn7d8.cloudfront.net/assets/beetstrap/brand/logo@3x-c01b12eeb889d8665611740b281d76fa1cf88d06bcbd8a50dbcae6baecdbe9da.png" height=45 width=130></a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                {% if user.is_authenticated %}
+                    <ul class="navbar-nav ml-auto">
+                        
+
+                        <li class="nav-item">
+                        <small class="text-white">Welcome, <strong class="username">{{ user.first_name }}  {{user.last_name }}</strong></small>
+                            <a class="nav-link pl-5 text-right user-logout" href="{% url 'logout' %}">Logout <i class="fa fa-sign-out pl-1" aria-hidden="true"></i></a>
+                        </li>
+                    </ul>
+                {% else %}
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link pr-3 pointer register-modal">Register <i class="fa fa-user-plus pl-1" aria-hidden="true"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3 pointer login-modal">Log In <i class="fa fa-sign-in pl-1" aria-hidden="true"></i> </a>
+                        </li>
+                    </ul>
+                {% endif %}
+            </div>
+        </nav>
+    </div>
+    <div class=" ml-5 mr-5 pl-4 pr-4 continue mt-4 mb-5">
+        <div class="progress mt-3 mb-3">
+            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 50%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        <h2>Checkout Form</h2>
+    <p>Fill the required form and confirm to place orders.</p>
+    <div class="row">
+    <div class="col-75">
+        <div class="container">
+        <form action="{% url 'checkout' %}" method="POST">
+            {% csrf_token %}
+            <div class="row">
+            <div class="col-50">
+                <h3>Shipping Address</h3>
+                <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                <input type="text" id="fname" name="name" value="{{ user.first_name }} {{ user.last_name }}" required>
+                <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                <input type="text" id="email" name="email" value="{{ user.email }}" required>
+                <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+                <input type="text" id="adr" name="address" placeholder="218, Shringhkhala Gali, Alaknagar, Koteshwor" required>
+                <label for="city"><i class="fa fa-institution"></i> City</label>
+                <input type="text" id="city" name="city" placeholder="Kathmandu" required>
+
+                <div class="row">
+                <div class="col-100 pl-4">
+                    <label for="state">Province</label>
+                    <input type="text" id="state" name="province" placeholder="Bagmati" required>
+                </div>
+                <div class="col-50">
+                    <label for="zip">Zip</label>
+                    <input type="text" id="zip" name="zip" placeholder="44600" required>
+                </div>
+                </div>
+            </div>
+
+          
+            
+            </div>
+            
+            <input type="submit" value="Continue to checkout" class="btn" id="submit-button">
+            <div class="hiddenfield" style="display:none">
+              <input type="text" name="product_name">
+              <input type="text" name="total">
+            </div>
+        </form>
+        </div>
+    </div>
+    <div class="col-25">
+        <div class="container">
+        <h4>Cart <span class="price cartnum" style="color:black"></span></h4>
+        <hr>
+        <div class="cart pb-1"></div>
+        
+        <hr>
+        <h4>Total <span class="price total" style="color:#46be25"><b></b></span></h4>
+        </div>
+    </div>
+    </div>
+
+    </div>
+</body>
+</html>
+
+
+<script>
+    const btn = document.querySelector('button');
+    //let hiddenfield = document.querySelector('.hiddenfield');
+    function displayProduct(){ 
+    if(localStorage.length > 0){
+        populatelocalStorage = localStorage.getItem('object').split('},').join('}$').split('$');
+        sum = 0;
+        document.querySelector(".cart").innerHTML = ''
+        populatelocalStorage.forEach((eachproductdetail)=>{
+            parsed_product = JSON.parse(eachproductdetail);
+            sum += parsed_product["qty"];
+            document.querySelector(".cart").innerHTML += `<p class="pt-1 product">${parsed_product['product_name_cart']} <span class="price">qty: ${parsed_product['qty']}</span></p>`
+                    
+    });
+    document.querySelector(".cartnum").innerHTML = `<i class="fa fa-shopping-cart"></i> <b>${sum}</b>`;
+    randomprice = Math.random() * (200-100) + 100;
+    let total = sum * Math.floor(randomprice);
+    document.querySelector(".total").innerHTML = `<b>Rs.${total}</b>`;
+    let data = ""
+    products = document.querySelectorAll(".product");
+    products.forEach((item,i) => {
+        console.log(item.innerText);
+         //hiddenfield += `<input type="text" name="product_name" value = "${item.innerText}"`;
+         data += item.innerText;
+         data += " ";
+        //document.querySelector("input[name='product_name']").value += item.innerText;
+        //document.querySelector("input[name='product_name']").value += " ";
+    });
+    document.querySelector("input[name='product_name']").value = data;
+    total = document.querySelector(".total").innerText;
+    //hiddenfield += `<input type="text" name="total" value="${total}"`;
+    document.querySelector("input[name='total']").value += total;
+    console.log(total)
+}};
+
+
+    displayProduct();
+
+
+
+
+</script>

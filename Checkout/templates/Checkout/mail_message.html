@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <!--bootstrap4 cdn-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    </head>
+
+    <body>
+        <img src="https://d2guulkeunn7d8.cloudfront.net/assets/beetstrap/brand/logo@3x-c01b12eeb889d8665611740b281d76fa1cf88d06bcbd8a50dbcae6baecdbe9da.png" height=45 width=130 style="display:block; margin-left:auto; margin-right:auto">
+        <div style="margin:auto;width:50%">
+            <div style="background-color: #1AADA3; padding-top: 30px; padding-bottom: 30px;text-align: center; color:white;"><h4>Thank you for your order.</h4></div>
+            <br>
+            <p>Hi {{ username }},</p>
+            <p>Just to let you know — we've received your order #{{ order_id }}, and it is now being processed:</p>
+            <p>Pay with cash upon delivery</p>
+            <strong style="color: #1AAD">[Order #{{ order_id }}]({{ date }})</strong>
+            <div class="cart"></div>
+            <table style="border:1px solid #ddd;width: 100%; padding-left:20px; text-align: left;">
+                <tr>
+                    <th style="border-bottom: 1px solid #ddd;">Product</th>
+                    <th style="border-bottom: 1px solid #ddd;">Quantity</th>
+                </tr>
+                {% for item,qty in product_name_details %}
+                <tr>
+                    <td>{{ item }}</td>
+                    <td>{{ qty }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <strong>Total: {{ total }}</strong>
+
+            <hr>
+            <strong style="color: #1AAD">Billing Address</strong>
+            <div style="border:1px solid cadetblue">
+                <div style="font-style: italic;">
+                    <ul style="list-style-type: none; padding:0">
+                        <li>{{ username }}</li>
+                            <li>{{ address }}</li>
+                            <li>{{ city }}</li>
+                            <li>{{ province }}</li>
+                    </ul>
+                </div>
+            </div>
+            <p>Thanks for using instacart!</p>
+        </div>
+    </body>
+</html>

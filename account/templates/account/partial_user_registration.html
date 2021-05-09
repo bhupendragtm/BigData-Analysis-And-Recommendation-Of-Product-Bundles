@@ -1,0 +1,27 @@
+{% load crispy_forms_tags %}
+<div class="modal-header  bg-dark text-white">
+    <h5 class="modal-title ml-auto">Register With Us.</h5>
+    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form method="POST" action="{% url 'register' %}" id="form">
+{% csrf_token %}
+<div class="modal-body">
+    <div class="row">
+        <div class="col-6">
+            {{ form.first_name|as_crispy_field }}
+        </div>
+        <div class="col-6">
+            {{ form.last_name|as_crispy_field }}
+        </div>
+    </div>
+    {{ form.email|as_crispy_field }}
+    {{ form.password1|as_crispy_field }}
+    {{ form.password2|as_crispy_field }}
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-success">Register</button>
+</div>
+</form>

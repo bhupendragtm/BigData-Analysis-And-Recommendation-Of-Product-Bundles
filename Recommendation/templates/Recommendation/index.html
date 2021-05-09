@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Instacart</title>
+     <!-- add icon link -->
+    <link rel = "icon" href = "https://th.bing.com/th/id/OIP.n3dyAjfUyuJDDrPHsOKbAQAAAA?pid=Api&w=180&h=180&c=7&dpr=1.12" type = "image/x-icon"> 
+    <!--font-->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <!--bootstrap4 cdn-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!--custom css-->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <!--fontawesome-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <!-- As a link -->
+    <div id="nav">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="{% url 'homepage' %}"><img src="https://d2guulkeunn7d8.cloudfront.net/assets/beetstrap/brand/logo@3x-c01b12eeb889d8665611740b281d76fa1cf88d06bcbd8a50dbcae6baecdbe9da.png" height=45 width=130></a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                {% if user.is_authenticated %}
+                    <ul class="navbar-nav ml-auto">
+                        
+
+                        <li class="nav-item">
+                        <small class="text-white">Welcome, <strong class="username">{{ user.first_name }}  {{user.last_name }}</strong></small>
+                            <a class="nav-link pl-5 text-right user-logout" href="{% url 'logout' %}">Logout <i class="fa fa-sign-out pl-1" aria-hidden="true"></i></a>
+                        </li>
+                    </ul>
+                {% else %}
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link pr-3 pointer register-modal">Register <i class="fa fa-user-plus pl-1" aria-hidden="true"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3 pointer login-modal">Log In <i class="fa fa-sign-in pl-1" aria-hidden="true"></i> </a>
+                        </li>
+                    </ul>
+                {% endif %}
+            </div>
+        </nav>
+    </div>
+ <a class="float-right p-4 mr-5 pointer cart"><img src="https://s3.amazonaws.com/nuggetcomfort/cart_icon.png" width="55px">
+    <div class="cart-count text-center">07</div>
+ </a>
+    <div class="jumbotron pb-3 pt-4 jumbo-image">
+        <div class="container">
+            <h2 class="display-4">Instacart Market Basket Analysis</h2>
+            <p class="text-white">Instacart is a same-day grocery delivery service that can save yourself that trip to the market.</p>
+            <hr class="mt-4 text-white">
+            <div class="row mt-5">
+                <div class="col-lg-4 col-md-12 col-sm-12 mr-5">
+                    <div class="row alert alert-primary mb-3">
+                        <div class="col-6">Total No. of Orders:</div>
+                        <div class="col-6 text-right"><strong>3.2 Millions</strong></div>
+                    </div>
+
+                     <div class="row alert alert-primary mb-3">
+                        <div class="col-6">Total No. of Users:</div>
+                        <div class="col-6 text-right"><strong>206,209</strong></div>
+                    </div>
+
+                     <div class="row alert alert-primary mb-3">
+                        <div class="col-8">Total No. of Products:</div>
+                        <div class="col-4 text-right"><strong>49,688</strong></div>
+                    </div>
+
+                    <div class="row alert alert-primary mb-3">
+                        <div class="col-9 text-left">Total No. of Rules Generated:</div>
+                        <div class="col-3 text-right"><strong>15,709</strong></div>
+                    </div>
+                   
+                    
+                </div>
+                <div class="col-lg-7 col-md-12 mr-5 box-shadow">
+                    <p class="mt-2 pl-2">Search for any products and we will provide the best recommendation for you.</p>
+                    <hr>
+                    <form method="GET" autocomplete="off" action="{% url 'productsearch' %}" id="form">
+                         <div class="form-group">
+                            <label for="formControlRange" class="text-secondary">Select number of recommendations: <output id="rangeoutput">5</output></label>
+                            <input type="range" class="form-control-range" id="range" min="1" max="15" value="5" name="recom">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control mr-sm-2 " type="text" placeholder="Search for product" name="product_name" id="search" autocomplete="off" list="datalist">
+                            {% if error_get %}
+                                 <small class="text-danger ml-2"><i class="fa fa-exclamation-circle"></i> {{ error_get }}</small>
+                            {% endif %}
+                           <datalist id="datalist"></datalist>
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-outline-success mt-2 cartaddbtnsearch"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add to basket</button>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-12 col-sm-10">
+               
+                <div class="box-shadow">
+                     <h4 class="ml-3">Recommendations</h4>
+                     <hr>
+                    <form method="GET" action="{% url 'productsearch' %}">
+                        <ul class="nobull">
+                        {% for item in recommendations %}
+                            <li>
+                                <input type="checkbox" id="item-{{ item }}" name="product_name" value="{{ item }}" class="recommendedproductname" />
+                                <label for="items">{{ item }}</label>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                        {% if recommendations %}
+                            <button type="submit" class="btn btn-lg btn-outline-success mt-2 recommendcartaddbtn"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add to basket</button>
+                        {% else %}
+                            <p class="alert alert-warning text-center">No Recommendation</p>
+                        {% endif %}
+                    </form>
+                </div>
+                <hr>
+
+                <div class="box-shadow mb-5">
+                    <h4 class="ml-3">Product Available</h4>
+                    <hr>
+                    <form method="GET" action="{% url 'productsearch' %}">
+                        <ul class="nobull">
+                        {% for item in items %}
+                            <li>
+                                <input type="checkbox" id="item-{{ item }}" name="product_name" value="{{ item }}" class="availableproductname"/>
+                                <label for="items">{{ item }}</label>
+                            </li>
+                        {% endfor %}
+                        <hr>
+                        <button type="submit" class="btn btn-lg btn-outline-success mt-2 cartaddbtn"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add to basket</button>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-5 col-sm-12">
+                <h4>Top Products Bundles</h4>
+                <hr>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Bundle</th>
+                        <th scope="col">Frequency</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for i,bundle in zippedBundles %}
+                        <tr>
+                        <th scope="row">{{ i }}</th>
+                        <td>{{ bundle.firstproduct }} + {{ bundle.secondproduct }}</td>
+                        <td class="text-right">{{ bundle.frequency }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="cart-popup shadow ">
+            <div class="cart-popup-header p-3">
+                <div class="row">
+                    <div class="col-10 header-text mt-2">
+                        <h5>Shopping Cart</h5>
+                    </div>
+                    <div class="col-2 text-right" title="Minimize Cart">
+                        <i class="fa fa-angle-down fa-2x pointer" aria-hidden="true"></i>
+                    </div>
+                </div> 
+            </div>
+          <div class="cart-body">
+                
+          </div>
+            <div class="cart-footer text-center">
+                {%if user.is_authenticated %}
+                    <a class="btn btn-danger btn-lg btn-block checkout-btn " href="{% url 'checkout' %}">CHECKOUT</a>
+                {% else %}
+                <!-- <button class="btn btn-danger btn-lg btn-block checkout-btn " disabled>CHECKOUT</button> -->
+                <button type="button" class="btn btn-lg btn-danger btn-block checkout-btn" data-toggle="popover" data-content="Please login to proceed checkout">CHECKOUT</button>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+ 
+
+    
+    <!-- Modal -->
+    <div class="modal fade mt-5 pt-2" id="Modal-user">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--modal will be displayed here-->
+        </div>
+    </div>
+    </div>
+
+    <!--bootstrap js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/3.0.0/bootstrap-native.min.js"></script>
+    <!-- custom js-->
+    <script src="{% static 'app.js' %}"></script>
+   
+</body>
+</html>
